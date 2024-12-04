@@ -63,12 +63,15 @@ class AocData:
     def lines(self, small: bool = False) -> List[str]:
         return [x for x in self.get_raw(small=small).split("\n") if x]
 
-    def matrix(self, cast: callable = None, small: bool = False):
+    def matrix(self, cast: callable = None, split_at: str = " ", small: bool = False):
         lines = self.lines(small=small)
 
         res = []
         for line in lines:
-            line = [el for el in line.split(" ") if el]
+            if split_at:
+                line = [el for el in line.split(split_at) if el]
+            else:
+                line = [el for el in list(line) if el]
             if cast:
                 line = [cast(el) for el in line]
             res.append(line)
